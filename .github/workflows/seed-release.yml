@@ -1,0 +1,26 @@
+name: Create Initial Public Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/seed-release.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create v1.0.0 release if missing
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh release view v1.0.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create v1.0.0 \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "Nova Browser v1.0.0" \
+              --notes "Official public Windows release of Nova Browser. Source code is maintained privately."
+          fi
