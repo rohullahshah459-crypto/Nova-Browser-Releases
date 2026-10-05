@@ -1,6 +1,7 @@
 name: Create Initial Public Release
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
